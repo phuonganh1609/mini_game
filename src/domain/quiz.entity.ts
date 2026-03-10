@@ -1,97 +1,95 @@
-
 "use client"
 import { Question } from "./quiz.data";
 
 export const questions: Question[] = [
 {
-question:"Chủ nghĩa xã hội phát triển sau chế độ nào?",
-answers:["Phong kiến","Tư bản chủ nghĩa","Nguyên thủy","Chiếm hữu nô lệ"],
-correct:1,
-money: 100
-},
-{
-question:"Nguyên tắc phân phối chủ yếu trong CNXH là gì?",
-answers:["Theo tài sản","Theo nhu cầu","Theo lao động","Theo địa vị"],
-correct:2,
-money: 200
-},
-{
-question:"Thời kì quá độ lên CNXH là gì?",
-answers:["Giai đoạn chuyển tiếp lên CNXH","Giai đoạn phong kiến","Giai đoạn nguyên thủy","Giai đoạn tư bản"],
-correct:0,
-money: 300
-},
-{
-question:"Mục tiêu cuối cùng của CNXH là gì?",
-answers:["Xã hội tư bản","Xã hội phong kiến","Xã hội nguyên thủy","Xã hội cộng sản"],
+question:"Nguyên tắc phân phối trong giai đoạn thấp của hình thái kinh tế - xã hội cộng sản chủ nghĩa là gì?",
+answers:["Làm theo lao động, hưởng theo nhu cầu","Làm theo năng lực, hưởng theo nhu cầu","Làm theo nhu cầu, hưởng theo lao động","Làm theo năng lực, hưởng theo lao động"],
 correct:3,
-money: 500
+money:100
 },
 {
-question:"Trong thời kì quá độ tồn tại điều gì?",
-answers:["Một thành phần kinh tế","Nhiều thành phần kinh tế","Không có kinh tế","Chỉ kinh tế nhà nước"],
-correct:1,
-money: 1000
-},
-{
-question:"Giai cấp lãnh đạo trong xây dựng CNXH là ai?",
-answers:["Giai cấp công nhân","Giai cấp tư sản","Giai cấp địa chủ","Giai cấp nông dân"],
-correct:0,
-money: 2000
-},
-{
-question:"Nhà nước trong thời kì quá độ là nhà nước gì?",
-answers:["Nhà nước phong kiến","Nhà nước tư sản","Nhà nước của nhân dân lao động","Nhà nước quân chủ"],
+question:"Đặc điểm nổi bật của thời kỳ quá độ lên chủ nghĩa xã hội là gì?",
+answers:["Không còn giai cấp","Không còn bóc lột","Tồn tại đan xen giữa nhân tố mới và tàn tích xã hội cũ","Mọi người sống tự do hoàn toàn"],
 correct:2,
-money: 4000
+money:200
 },
 {
-question:"Một đặc trưng của CNXH là gì?",
-answers:["Không có giai cấp","Áp bức bóc lột","Bất bình đẳng xã hội","Chỉ có kinh tế tư nhân"],
-correct:0,
-money: 8000
-},
-{
-question:"CNXH hướng tới điều gì?",
-answers:["Bóc lột lao động","Công bằng xã hội","Tăng cường giai cấp","Phát triển tư bản"],
+question:"Nước ta bước vào thời kỳ quá độ lên chủ nghĩa xã hội khi nào?",
+answers:["1945","1954","1975","1986"],
 correct:1,
-money: 16000
+money:300
 },
 {
-question:"Quan hệ sản xuất chủ yếu trong CNXH dựa trên gì?",
-answers:["Sở hữu tư nhân","Sở hữu phong kiến","Sở hữu công cộng","Sở hữu cá nhân"],
+question:"Điều kiện quyết định sự ra đời của chủ nghĩa xã hội là gì?",
+answers:["Mâu thuẫn giai cấp","Sự lớn mạnh công nhân","Cải tạo xã hội cũ","Cách mạng vô sản thành công"],
+correct:3,
+money:500
+},
+{
+question:"Mục tiêu cao nhất của chủ nghĩa xã hội là gì?",
+answers:["Giải phóng con người triệt để","Phát triển con người toàn diện","Giải phóng và phát triển con người cao nhất","Giải phóng và phát triển con người toàn diện"],
+correct:3,
+money:1000
+},
+{
+question:"Theo quan điểm Mác - Lênin có mấy góc độ tiếp cận chủ nghĩa xã hội?",
+answers:["2","3","4","5"],
+correct:1,
+money:2000
+},
+{
+question:"Nguyên tắc phân phối trong giai đoạn cao của hình thái kinh tế - xã hội cộng sản chủ nghĩa là gì?",
+answers:["Làm theo lao động, hưởng theo nhu cầu","Làm theo năng lực, hưởng theo nhu cầu","Làm theo nhu cầu, hưởng theo lao động","Làm theo năng lực, hưởng theo lao động"],
+correct:1,
+money:4000
+},
+{
+question:"Chủ nghĩa xã hội dựa trên chế độ sở hữu nào về tư liệu sản xuất chủ yếu?",
+answers:["Công hữu","Tập thể","Tư hữu","Hỗn hợp"],
+correct:0,
+money:8000
+},
+{
+question:"Đặc điểm kinh tế của thời kỳ quá độ lên CNXH là gì?",
+answers:["Một nền kinh tế phát triển","Nền kinh tế nhiều thành phần","Kinh tế nông nghiệp lạc hậu","Chỉ phát triển công nghiệp"],
+correct:1,
+money:16000
+},
+{
+question:"Theo C. Mác, xã hội thời kỳ quá độ có đặc điểm gì?",
+answers:["Kinh tế phát triển cao","Còn mang dấu vết xã hội cũ","Công bằng hoàn toàn","Lạc hậu hoàn toàn"],
+correct:1,
+money:32000
+},
+{
+question:"Đặc điểm tư tưởng - văn hoá trong thời kỳ quá độ là gì?",
+answers:["Tồn tại tư tưởng vô sản và tư sản","Chỉ có tư tưởng vô sản","Nhiều tư tưởng khác nhau","Chỉ có tư tưởng tư sản"],
 correct:2,
-money: 32000
+money:64000
 },
 {
-question:"Ai đặt nền móng lý luận cho CNXH khoa học?",
-answers:["Karl Marx và Friedrich Engels","Adam Smith","John Locke","Montesquieu"],
+question:"Đặc điểm xã hội trong thời kỳ quá độ là gì?",
+answers:["Các giai cấp vừa hợp tác vừa đấu tranh","Không còn đấu tranh giai cấp","Không còn khác biệt thành thị nông thôn","Không còn lao động trí óc"],
 correct:0,
-money: 64000
+money:125000
 },
 {
-question:"Thời kì quá độ có đặc điểm gì?",
-answers:["Không có mâu thuẫn","Có đấu tranh giữa cái cũ và cái mới","Không có phát triển kinh tế","Không có nhà nước"],
-correct:1,
-money: 125000
-},
-{
-question:"Nền kinh tế trong thời kì quá độ có đặc điểm gì?",
-answers:["Chỉ có kinh tế nhà nước","Nhiều thành phần kinh tế cùng tồn tại","Không có kinh tế tư nhân","Chỉ có kinh tế tập thể"],
-correct:1,
-money: 250000
-},
-{
-question:"Mục tiêu xã hội của CNXH là gì?",
-answers:["Giàu cho thiểu số","Công bằng, dân chủ, văn minh","Chỉ phát triển quân sự","Chỉ phát triển công nghiệp"],
-correct:1,
-money: 500000
-},
-{
-question:"CNXH là giai đoạn chuyển tiếp lên xã hội nào?",
-answers:["Xã hội cộng sản","Xã hội tư bản","Xã hội phong kiến","Xã hội nô lệ"],
+question:"Theo Lênin, hình thái kinh tế - xã hội cộng sản có mấy giai đoạn?",
+answers:["2","3","4","5"],
 correct:0,
-money: 1000000
+money:250000
+},
+{
+question:"Việt Nam bước vào thời kỳ quá độ CNXH trên phạm vi cả nước từ khi nào?",
+answers:["1945","1954","1975","1986"],
+correct:2,
+money:500000
+},
+{
+question:"Mục tiêu xã hội xã hội chủ nghĩa mà nhân dân ta xây dựng là gì?",
+answers:["Xã hội do nhân dân làm chủ","Con người sống hạnh phúc","Kinh tế phát triển cao","Dân giàu, nước mạnh, dân chủ, công bằng, văn minh"],
+correct:3,
+money:1000000
 }
 ];
-
