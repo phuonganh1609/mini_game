@@ -5,18 +5,33 @@ import { useGame } from "../hooks/useGame";
 import { useEffect, useState } from "react";
 import MoneyPyramid from "./MoneyPyramid";
 import Leaderboard from "./LeaderBoard";
-
+import {audioManager } from "../utils/sound";
 export default function GameBoard({ player, onExit }: { player: string; onExit: () => void }) {
-
-	const { question, current, gameOver, answer, money, finished, use5050, useAudience, answersToShow } = useGame(player);
+	useEffect(() => {
+		audioManager.init();
+		audioManager.stopAll();
+		audioManager.play("thinking");
+	}, []);
+	const [started, setStarted] = useState(false);
+	const { question, current, gameOver, answer, money, finished, use5050, useAudience, answersToShow, setGameOver, answerSai, correctIndex } = useGame(player);
 	const [used5050, setUsed5050] = useState(false);
 	const [usedAudience, setUsedAudience] = useState(false);
 	const [usedCall, setUsedCall] = useState(false);
 	const [usedStudio, setUsedStudio] = useState(false);
+	useEffect(() => {
+		if (!gameOver && !finished && current !== 0) {
+			audioManager.stopAll();
+			audioManager.play("thinking");
+		}
+		return () => {
+			audioManager.stop("thinking");
+		};
+	}, [current, gameOver, finished]);
 	// Gọi điện cho người thân
 	function handleCall() {
 		if (usedCall) return;
 		setUsedCall(true);
+		audioManager.play("lifeline"); // sound lifeline
 		// 70% trả lời đúng, 30% random
 		const isCorrect = Math.random() < 0.7;
 		let suggestion;
@@ -32,6 +47,7 @@ export default function GameBoard({ player, onExit }: { player: string; onExit: 
 	function handleStudio() {
 		if (usedStudio) return;
 		setUsedStudio(true);
+		audioManager.play("lifeline"); // sound lifeline
 		// 60% trả lời đúng, 40% random
 		const isCorrect = Math.random() < 0.6;
 		let suggestion;
@@ -45,12 +61,23 @@ export default function GameBoard({ player, onExit }: { player: string; onExit: 
 	}
 	const [timer, setTimer] = useState(30);
 
-	// Countdown timer
+	// Reset timer khi qua câu mới
+	useEffect(() => {
+		if (!gameOver && !finished) {
+			setTimer(30);
+		}
+	}, [current]);
+
+	// Countdown timer chỉ chạy khi đang chơi
 	useEffect(() => {
 		if (gameOver || finished) return;
 
-		if (timer === 0) {
-			onExit();
+		if (timer === 0 && !gameOver) {
+			audioManager.stopAll();
+			audioManager.play("timeout");
+			setTimeout(() => {
+				setGameOver(true);
+			}, 1500);
 			return;
 		}
 
@@ -100,22 +127,23 @@ export default function GameBoard({ player, onExit }: { player: string; onExit: 
 		);
 	}
 
+	function handleExit() {
+		audioManager.stopAll();
+		audioManager.play("welcome");
+		onExit();
+	}
 	return (
 		<div className="flex min-h-screen bg-gradient-to-b from-[#020617] via-[#0b1f44] to-[#020617] text-white">
-
 			{/* MONEY PYRAMID */}
 			<div className="w-72 flex items-center justify-center border-r border-blue-900">
 				<MoneyPyramid current={current} />
 			</div>
-
 			{/* MAIN GAME */}
 			<div className="flex-1 flex flex-col items-center justify-center p-10">
-
 				{/* TOP BAR */}
 				<div className="flex items-center justify-between w-full max-w-3xl mb-8">
-
 					<button
-						onClick={onExit}
+						onClick={handleExit}
 						className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full text-xl shadow"
 					>
 						←
@@ -129,13 +157,12 @@ export default function GameBoard({ player, onExit }: { player: string; onExit: 
 					{/* LIFELINES */}
 					<div className="flex gap-2">
 						<button
-							onClick={() => { if (!used5050) { use5050(); setUsed5050(true); } }}
+							onClick={() => { if (!used5050) { use5050(); setUsed5050(true); audioManager.play("lifeline"); } }}
 							disabled={used5050}
 							className={`bg-blue-200 text-blue-900 font-bold px-4 py-2 rounded shadow ${used5050 ? 'opacity-50 cursor-not-allowed' : ''}`}
 						>
 							50:50
 						</button>
-
 						<button
 							onClick={() => { if (!usedAudience) { useAudience(); setUsedAudience(true); } }}
 							disabled={usedAudience}
@@ -143,7 +170,6 @@ export default function GameBoard({ player, onExit }: { player: string; onExit: 
 						>
 							👥
 						</button>
-
 						<button
 							onClick={handleCall}
 							disabled={usedCall}
@@ -151,44 +177,46 @@ export default function GameBoard({ player, onExit }: { player: string; onExit: 
 						>
 							📞
 						</button>
-
 						<button
 							onClick={handleStudio}
 							disabled={usedStudio}
 							className={`bg-blue-200 text-blue-900 font-bold px-4 py-2 rounded shadow ${usedStudio ? 'opacity-50 cursor-not-allowed' : ''}`}
 						>
-							🔄
+							🏛️
 						</button>
 					</div>
-
 				</div>
-
 				{/* QUESTION */}
-				<div className="bg-[#0f2a5c] border-4 border-blue-500 px-12 py-6 rounded-3xl text-2xl text-center max-w-3xl mb-10 shadow-xl">
+				<div className="w-full max-w-3xl text-center text-2xl font-bold text-yellow-200 mb-6">
 					{question.question}
 				</div>
-
 				{/* ANSWERS */}
-				<div className="grid grid-cols-2 gap-6 w-full max-w-3xl">
-
-					{answersToShow.map((ans, i) => (
-
-						<button
-							key={i}
-							onClick={() => answer(i)}
-							className="bg-[#112a66] hover:bg-yellow-400 hover:text-black border-2 border-blue-400 px-6 py-4 rounded-full text-xl font-bold flex items-center gap-4 transition shadow-xl"
-						>
-
-							<span className="bg-blue-300 text-blue-900 rounded-full w-8 h-8 flex items-center justify-center font-bold">
-								{String.fromCharCode(65 + i)}
-							</span>
-
-							{ans}
-
-						</button>
-
-					))}
-
+				<div className="flex flex-col gap-6 mt-8 w-full max-w-3xl">
+					{answersToShow.map((ans, i) => {
+						let btnColor = "bg-[#112a66]";
+						let textColor = "text-white";
+						if (answerSai !== null && i === answerSai) {
+							btnColor = "bg-red-600";
+							textColor = "text-white";
+						}
+						if (correctIndex !== null && i === correctIndex) {
+							btnColor = "bg-green-500";
+							textColor = "text-white font-bold";
+						}
+						return (
+							<button
+								key={i}
+								onClick={() => answer(i)}
+								disabled={answerSai !== null || gameOver || finished}
+								className={`${btnColor} ${textColor} hover:bg-yellow-400 hover:text-black border-2 border-blue-400 px-6 py-4 rounded-full text-xl font-bold flex items-center gap-4 transition shadow-xl`}
+							>
+								<span className="bg-blue-300 text-blue-900 rounded-full w-8 h-8 flex items-center justify-center font-bold">
+									{String.fromCharCode(65 + i)}
+								</span>
+								{ans}
+							</button>
+						);
+					})}
 				</div>
 
 				{/* MONEY */}

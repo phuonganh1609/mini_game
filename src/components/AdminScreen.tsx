@@ -10,13 +10,6 @@ export default function AdminScreen({ onExit }: { onExit: () => void }) {
     setUsers(getLeaderboard());
   }, []);
 
-  function handleClearLeaderboard() {
-    if (window.confirm("Bạn có chắc muốn xóa toàn bộ leaderboard?") ) {
-      localStorage.removeItem("millionaire_scores");
-      setUsers([]);
-    }
-  }
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black to-blue-950 text-white">
       <h1 className="text-5xl mb-8 text-yellow-400 font-extrabold text-center">ADMIN DASHBOARD</h1>
@@ -32,14 +25,8 @@ export default function AdminScreen({ onExit }: { onExit: () => void }) {
           ))}
         </ul>
         <button
-          onClick={handleClearLeaderboard}
-          className="mt-6 bg-yellow-500 hover:bg-yellow-400 text-black px-6 py-3 rounded-lg font-bold text-lg shadow transition w-full"
-        >
-          Xóa Leaderboard
-        </button>
-        <button
           onClick={onExit}
-          className="mt-4 bg-red-500 hover:bg-red-400 text-white px-6 py-3 rounded-lg font-bold text-lg shadow transition w-full"
+          className="mt-6 bg-red-500 hover:bg-red-400 text-white px-6 py-3 rounded-lg font-bold text-lg shadow transition w-full"
         >
           Thoát về trang đầu
         </button>
