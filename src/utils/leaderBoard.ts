@@ -1,24 +1,49 @@
-export type Score={
-name:string
-score:number
+"use client"
+
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc
+} from "firebase/firestore"
+
+import { db } from "./firebase"
+
+export type Score = {
+  name: string
+  score: number
 }
 
-export function getLeaderboard():Score[]{
-const data = localStorage.getItem("millionaire_scores")
-return data ? JSON.parse(data) : []
+export async function getLeaderboard(): Promise<Score[]> {
+
+  const snapshot = await getDocs(collection(db, "leaderboard"))
+
+  const scores: Score[] = []
+
+  snapshot.forEach(doc => {
+    scores.push(doc.data() as Score)
+  })
+
+  scores.sort((a,b)=>b.score-a.score)
+
+  return scores.slice(0,10)
 }
 
-export function saveScore(name:string,score:number){
+export async function saveScore(name:string,score:number){
 
-const scores = getLeaderboard()
+  await addDoc(collection(db,"leaderboard"),{
+    name,
+    score
+  })
 
-scores.push({name,score})
+}
 
-scores.sort((a,b)=>b.score-a.score)
+export async function clearLeaderboard(){
 
-localStorage.setItem(
-"millionaire_scores",
-JSON.stringify(scores.slice(0,10))
-)
+  const snapshot = await getDocs(collection(db,"leaderboard"))
+
+  for (const docItem of snapshot.docs){
+    await deleteDoc(docItem.ref)
+  }
 
 }
