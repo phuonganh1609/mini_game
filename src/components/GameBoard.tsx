@@ -133,102 +133,144 @@ export default function GameBoard({ player, onExit }: { player: string; onExit: 
 		onExit();
 	}
 	return (
-		<div className="flex min-h-screen bg-gradient-to-b from-[#020617] via-[#0b1f44] to-[#020617] text-white">
-			{/* MONEY PYRAMID */}
-			<div className="w-72 flex items-center justify-center border-r border-blue-900">
-				<MoneyPyramid current={current} />
-			</div>
-			{/* MAIN GAME */}
-			<div className="flex-1 flex flex-col items-center justify-center p-10">
-				{/* TOP BAR */}
-				<div className="flex items-center justify-between w-full max-w-3xl mb-8">
-					<button
-						onClick={handleExit}
-						className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full text-xl shadow"
-					>
-						←
-					</button>
+		<div className="flex flex-col md:flex-row min-h-screen overflow-x-hidden bg-gradient-to-b from-[#020617] via-[#0b1f44] to-[#020617] text-white">
 
-					{/* TIMER */}
-					<div className="bg-black border-2 border-yellow-400 px-6 py-2 rounded-full text-yellow-400 text-2xl font-bold shadow-lg">
-						{minutes}:{seconds}
-					</div>
+  {/* MONEY PYRAMID */}
+  <div className="w-full md:w-72 flex items-center justify-center border-b md:border-b-0 md:border-r border-blue-900 p-4">
+    <MoneyPyramid current={current} />
+  </div>
 
-					{/* LIFELINES */}
-					<div className="flex gap-2">
-						<button
-							onClick={() => { if (!used5050) { use5050(); setUsed5050(true); audioManager.play("lifeline"); } }}
-							disabled={used5050}
-							className={`bg-blue-200 text-blue-900 font-bold px-4 py-2 rounded shadow ${used5050 ? 'opacity-50 cursor-not-allowed' : ''}`}
-						>
-							50:50
-						</button>
-						<button
-							onClick={() => { if (!usedAudience) { useAudience(); setUsedAudience(true); } }}
-							disabled={usedAudience}
-							className={`bg-blue-200 text-blue-900 font-bold px-4 py-2 rounded shadow ${usedAudience ? 'opacity-50 cursor-not-allowed' : ''}`}
-						>
-							👥
-						</button>
-						<button
-							onClick={handleCall}
-							disabled={usedCall}
-							className={`bg-blue-200 text-blue-900 font-bold px-4 py-2 rounded shadow ${usedCall ? 'opacity-50 cursor-not-allowed' : ''}`}
-						>
-							📞
-						</button>
-						<button
-							onClick={handleStudio}
-							disabled={usedStudio}
-							className={`bg-blue-200 text-blue-900 font-bold px-4 py-2 rounded shadow ${usedStudio ? 'opacity-50 cursor-not-allowed' : ''}`}
-						>
-							🏛️
-						</button>
-					</div>
-				</div>
-				{/* QUESTION */}
-				<div className="w-full max-w-3xl text-center text-2xl font-bold text-yellow-200 mb-6">
-					{question.question}
-				</div>
-				{/* ANSWERS */}
-				<div className="flex flex-col gap-6 mt-8 w-full max-w-3xl">
-					{answersToShow.map((ans, i) => {
-						let btnColor = "bg-[#112a66]";
-						let textColor = "text-white";
-						if (answerSai !== null && i === answerSai) {
-							btnColor = "bg-red-600";
-							textColor = "text-white";
-						}
-						if (correctIndex !== null && i === correctIndex) {
-							btnColor = "bg-green-500";
-							textColor = "text-white font-bold";
-						}
-						return (
-							<button
-								key={i}
-								onClick={() => answer(i)}
-								disabled={answerSai !== null || gameOver || finished}
-								className={`${btnColor} ${textColor} hover:bg-yellow-400 hover:text-black border-2 border-blue-400 px-6 py-4 rounded-full text-xl font-bold flex items-center gap-4 transition shadow-xl`}
-							>
-								<span className="bg-blue-300 text-blue-900 rounded-full w-8 h-8 flex items-center justify-center font-bold">
-									{String.fromCharCode(65 + i)}
-								</span>
-								{ans}
-							</button>
-						);
-					})}
-				</div>
+  {/* MAIN GAME */}
+  <div className="flex-1 flex flex-col items-center justify-center p-4 md:p-10">
 
-				{/* MONEY */}
-				<div className="mt-10 text-xl font-bold text-yellow-300">
-					💰 Tiền thưởng:{" "}
-					<span className="text-yellow-400 text-2xl">
-						{money.toLocaleString()} đ
-					</span>
-				</div>
+    {/* TOP BAR */}
+    <div className="flex flex-wrap items-center justify-between w-full max-w-3xl mb-8 gap-3">
 
-			</div>
+      <button
+        onClick={handleExit}
+        className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-full text-lg md:text-xl shadow"
+      >
+        ←
+      </button>
 
-		</div>
+      {/* TIMER */}
+      <div className="bg-black border-2 border-yellow-400 px-4 md:px-6 py-2 rounded-full text-yellow-400 text-xl md:text-2xl font-bold shadow-lg">
+        {minutes}:{seconds}
+      </div>
+
+      {/* LIFELINES */}
+      <div className="flex flex-wrap gap-2">
+
+        <button
+          onClick={() => {
+            if (!used5050) {
+              use5050();
+              setUsed5050(true);
+              audioManager.play("lifeline");
+            }
+          }}
+          disabled={used5050}
+          className={`bg-blue-200 text-blue-900 font-bold px-3 md:px-4 py-2 rounded shadow text-sm md:text-base ${
+            used5050 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          50:50
+        </button>
+
+        <button
+          onClick={() => {
+            if (!usedAudience) {
+              useAudience();
+              setUsedAudience(true);
+            }
+          }}
+          disabled={usedAudience}
+          className={`bg-blue-200 text-blue-900 font-bold px-3 md:px-4 py-2 rounded shadow text-sm md:text-base ${
+            usedAudience ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          👥
+        </button>
+
+        <button
+          onClick={handleCall}
+          disabled={usedCall}
+          className={`bg-blue-200 text-blue-900 font-bold px-3 md:px-4 py-2 rounded shadow text-sm md:text-base ${
+            usedCall ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          📞
+        </button>
+
+        <button
+          onClick={handleStudio}
+          disabled={usedStudio}
+          className={`bg-blue-200 text-blue-900 font-bold px-3 md:px-4 py-2 rounded shadow text-sm md:text-base ${
+            usedStudio ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          🏛️
+        </button>
+
+      </div>
+    </div>
+
+    {/* QUESTION */}
+    <div className="w-full max-w-3xl text-center text-lg md:text-2xl font-bold text-yellow-200 mb-6 px-2">
+      {question.question}
+    </div>
+
+    {/* ANSWERS */}
+    <div className="flex flex-col gap-4 md:gap-6 mt-4 md:mt-8 w-full max-w-3xl">
+      {answersToShow.map((ans, i) => {
+
+        let btnColor = "bg-[#112a66]";
+        let textColor = "text-white";
+
+        if (answerSai !== null && i === answerSai) {
+          btnColor = "bg-red-600";
+          textColor = "text-white";
+        }
+
+        if (correctIndex !== null && i === correctIndex) {
+          btnColor = "bg-green-500";
+          textColor = "text-white font-bold";
+        }
+
+        return (
+          <button
+            key={i}
+            onClick={() => answer(i)}
+            disabled={answerSai !== null || gameOver || finished}
+            className={`${btnColor} ${textColor}
+              hover:bg-yellow-400 hover:text-black
+              border-2 border-blue-400
+              px-4 md:px-6
+              py-3 md:py-4
+              rounded-full
+              text-base md:text-xl
+              font-bold
+              flex items-center gap-3 md:gap-4
+              transition shadow-xl`}
+          >
+            <span className="bg-blue-300 text-blue-900 rounded-full w-7 h-7 md:w-8 md:h-8 flex items-center justify-center font-bold">
+              {String.fromCharCode(65 + i)}
+            </span>
+            {ans}
+          </button>
+        );
+      })}
+    </div>
+
+    {/* MONEY */}
+    <div className="mt-8 md:mt-10 text-lg md:text-xl font-bold text-yellow-300">
+      💰 Tiền thưởng:{" "}
+      <span className="text-yellow-400 text-xl md:text-2xl">
+        {money.toLocaleString()} đ
+      </span>
+    </div>
+
+  </div>
+</div>
 	);
 }
